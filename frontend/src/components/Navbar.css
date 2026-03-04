@@ -1,0 +1,47 @@
+/* Navbar.css */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: #1f2937;
+    color: white;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.register-btn {
+    background-color: #10b981;
+    color: white;
+}
+
+.register-btn:hover {
+    background-color: #059669;
+}
+
+.login-btn {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.login-btn:hover {
+    background-color: #2563eb;
+}
