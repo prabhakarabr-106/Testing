@@ -3,88 +3,75 @@ import axios from "axios";
 import "./Log.css";
 
 const Log = () => {
-
-  const [formData, setFormData] = useState({
-    email: "",
-    password: ""
-  });
-
-  const [message, setMessage] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  // handle input change
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  // handle form submit
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const res = await axios.post(
-        "http://localhost:5000/admin/login",
-        formData
-      );
-
-      console.log("Response:", res.data);
-
-      setMessage(res.data.message);
-      setIsSuccess(true);
-
-      // clear fields
-      setFormData({
+    const [formData, setFormData] = useState({
         email: "",
         password: ""
-      });
+    });
 
-    } catch (error) {
+    const [message, setMessage] = useState("");
+    const [isSuccess, setIsSuccess] = useState(false);
 
-      console.log("Error:", error);
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-      setMessage(
-        error.response?.data?.message || "Login failed"
-      );
-      setIsSuccess(false);
-    }
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-  return (
-    <div className="login-container">
-      <form className="login-form" onSubmit={handleSubmit}>
+        try {
+            const res = await axios.post(
+                "http://localhost:5000/admin/login",
+                formData
+            );
 
-        <h2>Admin Login</h2>
+            setMessage(res.data.message);
+            setIsSuccess(true);
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
+            console.log("Email:", formData.email);
+            console.log("Password:", formData.password);
+            console.log("User Data:", res.data);
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
+            setFormData({ email: "", password: "" });
 
-        <button type="submit">Login</button>
+        } catch (err) {
+            setMessage(err.response?.data?.message || "");
+            setIsSuccess(false);
+        }
+    };
 
-        <p className={`message ${isSuccess ? "success" : "error"}`}>
-          {message}
-        </p>
+    return (
+        <div className="login-container">
+            <form className="login-form" onSubmit={handleSubmit}>
+                <h2>Admin Login</h2>
 
-      </form>
-    </div>
-  );
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                />
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                />
+
+                <button type="submit">Login</button>
+
+                {message && (
+                    <p className={`message ${isSuccess ? "success" : "error"}`}>
+                        {message}
+                    </p>
+                )}
+            </form>
+        </div>
+    );
 };
 
 export default Log;
